@@ -8,7 +8,7 @@
 import UIKit
 
 class AddRegistrationTableViewController: UITableViewController {
-
+    
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -22,9 +22,22 @@ class AddRegistrationTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    
+    
+    @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        let firstName = firstNameTextField.text ?? ""
+        let lastName = lastNameTextField.text ?? ""
+        let email = emailTextField.text ?? ""
+        
+        print("DONE TAPPED")
+        print("firstName: \(firstName)")
+        print("lastName: \(lastName)")
+        print("email: \(email)")
+    }
+    
     // MARK: - Table view data source
-
+/*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
@@ -35,19 +48,7 @@ class AddRegistrationTableViewController: UITableViewController {
         return 0
     }
     
-   /*@IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
-        
-        let firstName = firstNameTextField.text
-        let lastName = lastNameTextField.text
-        let email = emailTextField.text
-        
-        print("Done Tapped")
-        print("First Name : \(firstName ?? "")")
-        print("Last Name : \(lastName ?? "")")
-        print("email : \(email ?? "")")
-        
-        
-    }*/
+    */
     
 
     /*
