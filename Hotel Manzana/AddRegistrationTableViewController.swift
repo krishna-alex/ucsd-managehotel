@@ -20,11 +20,23 @@ class AddRegistrationTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let midnightToday = Calendar.current.startOfDay(for: Date())
+        checkInDatePicker.minimumDate = midnightToday
+        checkInDatePicker.date = midnightToday
+        
+       updateDateViews()
+    }
+    
+    func updateDateViews() {
+        checkOutDatePicker.minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: checkInDatePicker.date)
+        checkInDateLabel.text = checkInDatePicker.date.formatted(date: .abbreviated, time: .omitted)
+        checkOutDateLabel.text = checkOutDatePicker.date.formatted(date: .abbreviated, time: .omitted)
+    }
+    
+    
+    @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
+        updateDateViews()
+        
     }
     
     
@@ -33,11 +45,15 @@ class AddRegistrationTableViewController: UITableViewController {
         let firstName = firstNameTextField.text ?? ""
         let lastName = lastNameTextField.text ?? ""
         let email = emailTextField.text ?? ""
+        let checkInDate = checkInDatePicker.date
+        let checkOutDate = checkOutDatePicker.date
         
         print("DONE TAPPED")
         print("firstName: \(firstName)")
         print("lastName: \(lastName)")
         print("email: \(email)")
+        print("CheckIn: \(checkInDate)")
+        print("CheckOut: \(checkOutDate)")
     }
     
     // MARK: - Table view data source
