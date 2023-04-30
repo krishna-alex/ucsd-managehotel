@@ -13,6 +13,10 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
+    @IBOutlet weak var checkInDatePicker: UIDatePicker!
+    @IBOutlet weak var checkInDateLabel: UILabel!
+    @IBOutlet weak var checkOutDatePicker: UIDatePicker!
+    @IBOutlet weak var checkOutDateLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
