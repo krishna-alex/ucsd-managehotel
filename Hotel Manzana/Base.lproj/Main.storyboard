@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XHP-fh-Dqm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Unk-qH-fwO">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
@@ -280,6 +280,37 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="k5m-kV-dVx">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="xZn-Ql-g1B" detailTextLabel="gWJ-SQ-Nr9" rowHeight="66" style="IBUITableViewCellStyleValue1" id="JkL-3A-EtN">
+                                        <rect key="frame" x="0.0" y="1032.6666564941406" width="393" height="66"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JkL-3A-EtN" id="U19-XQ-Yqf">
+                                            <rect key="frame" x="0.0" y="0.0" width="362.66666666666669" height="66"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Room Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xZn-Ql-g1B">
+                                                    <rect key="frame" x="20" y="23" width="85.666666666666671" height="20.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gWJ-SQ-Nr9">
+                                                    <rect key="frame" x="311" y="23" width="43.666666666666664" height="20.333333333333332"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="XHP-fh-Dqm" kind="show" destinationCreationSelector="selectRoomType:" id="lKy-YI-9aB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="9lP-YG-h99" id="CqN-Xz-rpZ"/>
@@ -305,6 +336,7 @@
                         <outlet property="numberOfAdultsStepper" destination="O8l-qT-K4g" id="MmB-5u-red"/>
                         <outlet property="numberOfChildrenLabel" destination="AGi-2k-Erb" id="8dL-7I-zbV"/>
                         <outlet property="numberOfChildrenStepper" destination="bxT-l5-vUT" id="zX8-rb-XLX"/>
+                        <outlet property="roomTypeLabel" destination="gWJ-SQ-Nr9" id="cFZ-gf-sI9"/>
                         <outlet property="wifiSwitch" destination="RAM-3l-cV9" id="ZeD-7A-dQs"/>
                     </connections>
                 </tableViewController>
@@ -351,6 +383,7 @@
                             <outlet property="delegate" destination="XHP-fh-Dqm" id="oKb-1Z-TCB"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="6qu-4B-Ino"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IIq-fL-60M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
