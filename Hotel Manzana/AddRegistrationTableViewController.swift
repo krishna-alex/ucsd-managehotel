@@ -18,6 +18,11 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet weak var checkOutDatePicker: UIDatePicker!
     @IBOutlet weak var checkOutDateLabel: UILabel!
     
+    @IBOutlet weak var numberOfAdultsLabel: UILabel!
+    
+    @IBOutlet weak var numberOfAdultsStepper: UIStepper!
+    @IBOutlet weak var numberOfChildrenLabel: UILabel!
+    @IBOutlet weak var numberOfChildrenStepper: UIStepper!
     let checkInDatePickerCellIndexPath = IndexPath(row: 1, section: 1)
     let checkOutDatePickerCellIndexPath = IndexPath(row: 3, section: 1)
     
@@ -44,7 +49,9 @@ class AddRegistrationTableViewController: UITableViewController {
         checkInDatePicker.date = midnightToday
         
     
-       updateDateViews()
+        updateDateViews()
+        updateNumberOfGuests()
+        
     }
     
     func updateDateViews() {
@@ -53,11 +60,22 @@ class AddRegistrationTableViewController: UITableViewController {
         checkOutDateLabel.text = checkOutDatePicker.date.formatted(date: .abbreviated, time: .omitted)
     }
     
+    func updateNumberOfGuests() {
+        numberOfAdultsLabel.text = String(Int(numberOfAdultsStepper.value))
+        numberOfChildrenLabel.text = String(Int(numberOfChildrenStepper.value))
+    }
+    
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
         
     }
+    
+    @IBAction func noOfGuestsChanged(_ sender: UIStepper) {
+        
+        updateNumberOfGuests()
+    }
+    
     
     
     @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
@@ -67,6 +85,8 @@ class AddRegistrationTableViewController: UITableViewController {
         let email = emailTextField.text ?? ""
         let checkInDate = checkInDatePicker.date
         let checkOutDate = checkOutDatePicker.date
+        let numberOfAdults = Int(numberOfAdultsStepper.value)
+        let numberOfChildren = Int(numberOfChildrenStepper.value)
         
         print("DONE TAPPED")
         print("firstName: \(firstName)")
@@ -74,6 +94,9 @@ class AddRegistrationTableViewController: UITableViewController {
         print("email: \(email)")
         print("CheckIn: \(checkInDate)")
         print("CheckOut: \(checkOutDate)")
+        print("numberOfAdults: \(numberOfAdults)")
+        print("numberOfChildren: \(numberOfChildren)")
+
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
