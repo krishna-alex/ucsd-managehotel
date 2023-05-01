@@ -23,6 +23,8 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet weak var numberOfAdultsStepper: UIStepper!
     @IBOutlet weak var numberOfChildrenLabel: UILabel!
     @IBOutlet weak var numberOfChildrenStepper: UIStepper!
+    @IBOutlet weak var wifiSwitch: UISwitch!
+    
     let checkInDatePickerCellIndexPath = IndexPath(row: 1, section: 1)
     let checkOutDatePickerCellIndexPath = IndexPath(row: 3, section: 1)
     
@@ -76,6 +78,9 @@ class AddRegistrationTableViewController: UITableViewController {
         updateNumberOfGuests()
     }
     
+    @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
+        
+    }
     
     
     @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
@@ -87,6 +92,7 @@ class AddRegistrationTableViewController: UITableViewController {
         let checkOutDate = checkOutDatePicker.date
         let numberOfAdults = Int(numberOfAdultsStepper.value)
         let numberOfChildren = Int(numberOfChildrenStepper.value)
+        let hasWifi = wifiSwitch.isOn
         
         print("DONE TAPPED")
         print("firstName: \(firstName)")
@@ -96,7 +102,7 @@ class AddRegistrationTableViewController: UITableViewController {
         print("CheckOut: \(checkOutDate)")
         print("numberOfAdults: \(numberOfAdults)")
         print("numberOfChildren: \(numberOfChildren)")
-
+        print("Wifi: \(hasWifi)")
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
