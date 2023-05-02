@@ -33,6 +33,8 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
     @IBOutlet weak var roomTypeLabel: UILabel!
     
+    @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    
     let checkInDatePickerCellIndexPath = IndexPath(row: 1, section: 1)
     let checkOutDatePickerCellIndexPath = IndexPath(row: 3, section: 1)
     
@@ -76,7 +78,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
         if let existingRegistration = existingRegistration {
             title = "View Guest Registration"
-           // doneBarButtonItem.isEnabled = false
+            doneBarButton.isEnabled = false
             
             roomType = existingRegistration.roomType
             firstNameTextField.text = existingRegistration.firstName
@@ -99,6 +101,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
     }
     
+    
     func updateDateViews() {
         checkOutDatePicker.minimumDate = Calendar.current.date(byAdding: .day, value: 1, to: checkInDatePicker.date)
         checkInDateLabel.text = checkInDatePicker.date.formatted(date: .abbreviated, time: .omitted)
@@ -116,6 +119,13 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         } else {
             roomTypeLabel.text = "Not set"
         }
+        
+        doneBarButton.isEnabled = existingRegistration == nil && registration != nil
+
+    }
+    
+    @IBAction func nameTextFieldChanged(_ sender: UITextField) {
+        doneBarButton.isEnabled = existingRegistration == nil && registration != nil
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
