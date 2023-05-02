@@ -9,11 +9,6 @@ import UIKit
 
 class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeTableViewControllerDelegate {
     
-    func selectRoomTypeTableViewController(_ controller: SelectRoomTypeTableViewController, didSelect roomType: RoomType) {
-        self.roomType = roomType
-        updateRoomType()
-    }
-    
     
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -34,6 +29,15 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet weak var roomTypeLabel: UILabel!
     
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    
+    
+    @IBOutlet weak var chargesNumberOfNightsLabel: UILabel!
+    @IBOutlet weak var chargesNumberOfNightsDetailLabel: UILabel!
+    @IBOutlet weak var chargesRoomRateLabel: UILabel!
+    @IBOutlet weak var chargesRoomTypeLabel: UILabel!
+    @IBOutlet weak var chargesWifiLabel: UILabel!
+    @IBOutlet weak var chargesWifiDetailLabel: UILabel!
+    @IBOutlet weak var chargesTotalLabel: UILabel!
     
     let checkInDatePickerCellIndexPath = IndexPath(row: 1, section: 1)
     let checkOutDatePickerCellIndexPath = IndexPath(row: 3, section: 1)
@@ -98,6 +102,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         updateDateViews()
         updateNumberOfGuests()
         updateRoomType()
+        updateChargesSection()
         
     }
     
@@ -124,22 +129,55 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
 
     }
     
+    func updateChargesSection() {
+        let dateComponents = Calendar.current.dateComponents([.day], from: checkInDatePicker.date, to: checkOutDatePicker.date)
+        let numberOfNights = dateComponents.day ?? 0
+        
+        chargesNumberOfNightsLabel.text = "\(numberOfNights)"
+        chargesNumberOfNightsDetailLabel.text = "\(checkInDatePicker.date.formatted(date: .abbreviated, time: .omitted)) - \(checkOutDatePicker.date.formatted(date: .abbreviated, time: .omitted))"
+        
+        let roomRateTotal: Int
+        if let roomType = roomType {
+            roomRateTotal = Int(roomType.price) * numberOfNights
+            chargesRoomRateLabel.text = "$ \(roomRateTotal)"
+            chargesRoomTypeLabel.text = "\(roomType.name) @ $\(roomType.price)/night"
+        } else {
+            roomRateTotal = 0
+            chargesRoomRateLabel.text = "--"
+            chargesRoomTypeLabel.text = "--"
+        }
+        
+        
+        let wifiTotal: Int
+        if wifiSwitch.isOn {
+            wifiTotal = 10 * numberOfNights
+        } else {
+            wifiTotal = 0
+        }
+        chargesWifiLabel.text = "$ \(wifiTotal)"
+        chargesWifiDetailLabel.text = wifiSwitch.isOn ? "Yes" : "No"
+        
+        chargesTotalLabel.text = "$ \(roomRateTotal + wifiTotal)"
+    }
+    
+    
     @IBAction func nameTextFieldChanged(_ sender: UITextField) {
         doneBarButton.isEnabled = existingRegistration == nil && registration != nil
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         updateDateViews()
-        
+        updateChargesSection()
     }
     
     @IBAction func noOfGuestsChanged(_ sender: UIStepper) {
         
         updateNumberOfGuests()
+        updateChargesSection()
     }
     
     @IBAction func wifiSwitchChanged(_ sender: UISwitch) {
-        
+        updateChargesSection()
     }
     
     @IBSegueAction func selectRoomType(_ coder: NSCoder) -> SelectRoomTypeTableViewController? {
@@ -198,5 +236,10 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         tableView.endUpdates()
     }
     
+    func selectRoomTypeTableViewController(_ controller: SelectRoomTypeTableViewController, didSelect roomType: RoomType) {
+        self.roomType = roomType
+        updateRoomType()
+        updateChargesSection()
+    }
     
 }
