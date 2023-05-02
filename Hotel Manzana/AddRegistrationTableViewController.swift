@@ -32,6 +32,7 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     @IBOutlet weak var wifiSwitch: UISwitch!
     
     @IBOutlet weak var roomTypeLabel: UILabel!
+    
     let checkInDatePickerCellIndexPath = IndexPath(row: 1, section: 1)
     let checkOutDatePickerCellIndexPath = IndexPath(row: 3, section: 1)
     
@@ -52,14 +53,46 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
     
     var roomType: RoomType?
     
+    var registration: Registration? {
+        guard let roomType = roomType else {return nil}
+        
+        let firstName = firstNameTextField.text ?? ""
+        let lastName = lastNameTextField.text ?? ""
+        let email = emailTextField.text ?? ""
+        let checkInDate = checkInDatePicker.date
+        let checkOutDate = checkOutDatePicker.date
+        let numberOfAdults = Int(numberOfAdultsStepper.value)
+        let numberOfChildren = Int(numberOfChildrenStepper.value)
+        let hasWifi = wifiSwitch.isOn
+        
+        return Registration(firstName: firstName, lastName: lastName, email: email, checkInDate: checkInDate, checkOutDate: checkOutDate, numberOfAdults: numberOfAdults, numberOfChildren: numberOfChildren, wifi: hasWifi, roomType: roomType)
+        
+    }
+    
+    var existingRegistration: Registration?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let midnightToday = Calendar.current.startOfDay(for: Date())
-        checkInDatePicker.minimumDate = midnightToday
-        checkInDatePicker.date = midnightToday
         
-    
+        if let existingRegistration = existingRegistration {
+            title = "View Guest Registration"
+           // doneBarButtonItem.isEnabled = false
+            
+            roomType = existingRegistration.roomType
+            firstNameTextField.text = existingRegistration.firstName
+            lastNameTextField.text = existingRegistration.lastName
+            emailTextField.text = existingRegistration.email
+            checkInDatePicker.date = existingRegistration.checkInDate
+            checkOutDatePicker.date = existingRegistration.checkOutDate
+            numberOfAdultsStepper.value = Double(existingRegistration.numberOfAdults)
+            numberOfChildrenStepper.value = Double(existingRegistration.numberOfChildren)
+            wifiSwitch.isOn = existingRegistration.wifi
+        } else {
+            let midnightToday = Calendar.current.startOfDay(for: Date())
+            checkInDatePicker.minimumDate = midnightToday
+            checkInDatePicker.date = midnightToday
+        }
+            
         updateDateViews()
         updateNumberOfGuests()
         updateRoomType()
@@ -99,31 +132,6 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         
     }
     
-    
-    @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
-        
-        let firstName = firstNameTextField.text ?? ""
-        let lastName = lastNameTextField.text ?? ""
-        let email = emailTextField.text ?? ""
-        let checkInDate = checkInDatePicker.date
-        let checkOutDate = checkOutDatePicker.date
-        let numberOfAdults = Int(numberOfAdultsStepper.value)
-        let numberOfChildren = Int(numberOfChildrenStepper.value)
-        let hasWifi = wifiSwitch.isOn
-        let roomChoice = roomType?.name ?? "Not Set"
-        
-        print("DONE TAPPED")
-        print("firstName: \(firstName)")
-        print("lastName: \(lastName)")
-        print("email: \(email)")
-        print("CheckIn: \(checkInDate)")
-        print("CheckOut: \(checkOutDate)")
-        print("numberOfAdults: \(numberOfAdults)")
-        print("numberOfChildren: \(numberOfChildren)")
-        print("Wifi: \(hasWifi)")
-        print("RoomType: \(roomChoice)")
-    }
-    
     @IBSegueAction func selectRoomType(_ coder: NSCoder) -> SelectRoomTypeTableViewController? {
         let selectRoomTypeController = SelectRoomTypeTableViewController(coder: coder)
         selectRoomTypeController?.delegate = self
@@ -132,6 +140,10 @@ class AddRegistrationTableViewController: UITableViewController, SelectRoomTypeT
         return selectRoomTypeController
     }
     
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        
+        dismiss(animated: true)
+    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath {
